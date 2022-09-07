@@ -37,13 +37,18 @@ export class AuthService {
 
     private async createUser(data: RegisterUserDTO): Promise<User> {
         // encrypt password
-        const encryptedPassword:string = await this.encryptPassword(data.password);   
-        const rawResults = await this.repo.query(`INSERT INTO 'user' (email, password) 
-                                     VALUES (${data.email}, ${encryptedPassword});
-                                     SELECT LAST_INSERT_ID();`);
-        const user = await this.repo.query(`SELECT * FROM 'user' WHERE 'id'=${rawResults}`);
+        try {
+            const encryptedPassword:string = await this.encryptPassword(data.password);   
+            const {insertId} = await this.repo.query(`INSERT INTO user (email, password) 
+                                     VALUES ('${data.email}', '${encryptedPassword}');`);
+        console.log('ID GENERATED= ', insertId);
+        const user = await this.repo.query(`SELECT * FROM user WHERE id='${insertId}'`);
         console.log(user);
         return user as User;
+        } catch(err) {
+            console.log('ERROR: ', err);
+            return {} as User;
+        }
     }
     
     private async encryptPassword(password: string): Promise<string> {
