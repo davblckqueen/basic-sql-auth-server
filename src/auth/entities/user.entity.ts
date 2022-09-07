@@ -1,7 +1,6 @@
 // TypeORM  Decorators
-import { Column, Entity, OneToOne, BeforeUpdate } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import * as bcrypt from 'bcrypt';
 import {isNil} from 'lodash'
 // Extra entities
 import { BaseEntity } from '../../shared/entities/base.entity';
@@ -11,13 +10,16 @@ export class User extends BaseEntity {
     @Column()
     @ApiProperty()
     email: string;
-
+    /*
     @Column()
     hash?: string;
+    */
 
+    @Column()
     @ApiProperty()
-    password?: string;
+    password: string;
 
+    /*
     @BeforeUpdate()
     private async encryptPassword(): void {
         const isMatch = !isNil(this.hash) 
@@ -27,4 +29,5 @@ export class User extends BaseEntity {
         const salt = await bcrypt.genSalt();
         this.hash = await bcrypt.hash(this.password, salt);
     }
+    */
 }

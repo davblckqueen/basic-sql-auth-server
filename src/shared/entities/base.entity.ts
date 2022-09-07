@@ -10,11 +10,11 @@ export abstract class BaseEntity {
   @ApiProperty()
   id: string;
 
-  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   @ApiProperty()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   @ApiProperty()
   updatedAt: Date;
 }

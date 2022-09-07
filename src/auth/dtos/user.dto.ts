@@ -5,9 +5,8 @@ import { CreateProfileDTO } from '../../users/dtos/profile.dto';
 export class RegisterUserDTO extends IntersectionType(
     OmitType(User, [
         'id',
-        'hash',
         'createdAt', 
-        'updateAt',
+        'updatedAt',
     ] as const), 
     CreateProfileDTO,
 ) {}
