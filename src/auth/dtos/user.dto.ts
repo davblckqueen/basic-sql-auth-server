@@ -10,3 +10,14 @@ export class RegisterUserDTO extends IntersectionType(
     ] as const), 
     CreateProfileDTO,
 ) {}
+
+export class LoginDTO extends OmitType(User, [
+    'id',
+    'createdAt', 
+    'updatedAt',
+]) {}
+
+export class TokenDTO {
+    @ApiProperty()
+    access_token: string
+}

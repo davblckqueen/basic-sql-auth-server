@@ -5,13 +5,14 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Basic SQL AUTH Server')
     .setDescription(
       'This application manage all related to USER AUTHENTICATION',
     )
     .setVersion('0.1.0')
     .addTag('auth')
-    .addTag('users')
+    .addTag('user')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -16,7 +16,6 @@ export class User extends BaseEntity {
     password?: string;
 
     @OneToOne(type => Profile, (profile) => profile.user)
-    @ApiProperty({ type: Profile, required: false })
     profile?: Profile;
 
     /*
