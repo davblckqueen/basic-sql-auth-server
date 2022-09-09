@@ -1,5 +1,5 @@
 // TypeORM  Decorators
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 // Extra entities
 import { BaseEntity } from '../../shared/entities/base.entity';
@@ -14,4 +14,8 @@ export class Profile extends BaseEntity {
     @Column({ nullable: true })
     @ApiProperty({ required: false })
     address: string;
+
+    @OneToOne(type => User, (user) => user.profile, {eager: true})
+    @JoinColumn({ name: "userId" })
+    user: User;
 }

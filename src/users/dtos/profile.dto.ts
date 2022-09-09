@@ -4,6 +4,10 @@ import { Profile } from '../entities/profile.entity';
 
 export class CreateProfileDTO extends OmitType(Profile, [
     'id',
+    'user',
     'createdAt', 
     'updatedAt',
-] as const) {}
+] as const) {
+    @ApiProperty()
+    userId: number;
+}
