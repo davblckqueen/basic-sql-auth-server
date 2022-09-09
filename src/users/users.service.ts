@@ -31,7 +31,6 @@ export class UsersService {
                 if(isNil(userInfo)) 
                     return reject(new NotFoundException(data.userId));
                 // Create & Save the entity
-                console.log(data);
                 const profile: Profile = await this.createEntity(data);
                 // END
                 resolve(

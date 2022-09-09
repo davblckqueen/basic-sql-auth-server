@@ -46,7 +46,6 @@ export class AuthService {
         return new Promise(async (resolve, reject) => {
             try {
                 const user: User = await this.selectUser(userId);
-                console.log(user);
                 resolve(user);
             } catch (error) {
                 reject(new InternalServerErrorException(error));
@@ -61,7 +60,6 @@ export class AuthService {
             // Run raw queries
             const {insertId} = await this.repo.query(`INSERT INTO user (email, password) 
                                      VALUES ('${data.email}', '${encryptedPassword}');`);
-            console.log('USER ID: ', insertId);
             // END
             return await this.selectUser(insertId);
         } catch(err) {
@@ -72,9 +70,7 @@ export class AuthService {
 
     private async selectUser(id: number): Promise<User> {
         try {
-            console.log('PARAM ID: ', id);
             const user = await this.repo.query(`SELECT id, email, createdAt, updatedAt FROM user WHERE id='${id}' LIMIT 1`);
-            console.log('DBUSER: ', user);
             return user[0] as User;
         } catch(err) {
             console.log('ERROR: ', err);
