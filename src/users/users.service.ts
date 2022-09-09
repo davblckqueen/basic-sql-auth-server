@@ -61,10 +61,10 @@ export class UsersService {
     private async selectProfile(id: number): Promise<Profile> {
         try {
             const profile = await this.repo.query(`SELECT id, name, address, createdAt, updatedAt FROM profile WHERE id='${id}'`);
-            return profile[0] as Profile;
+            return profile[0] as Profile ?? null;
         } catch(err) {
             console.log('ERROR: ', err);
-            return {} as Profile;
+            return null;
         }
 
     }

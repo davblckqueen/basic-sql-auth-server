@@ -76,5 +76,16 @@ Nest is [MIT licensed](LICENSE).
 ```sh
 docker run --name mysql1 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e "MYSQL_ROOT_PASSWORD=Qwer123*" -e MYSQL_DATABASE=authdemo -d --rm mysql/mysql-server:latest
 
-curl -d '{"email":"d@r.com", "password":"123"}' -H "Content-Type: application/json" -X POST http://localhost:3000/auth/signup
+curl -d '{"name":"dav", "address":"cra 1", "email":"d@r.com", "password":"123"}' -H "Content-Type: application/json" -X POST http://localhost:3000/auth/signup
+
+SECURITY:
+1. Data validation: class-validator class-transformer
+2. Encrypt password: Through the database
+3. Encrypt payload e2e: Asymmetric encryption -> e2e curl pre-scripts
+4. 
+LOGGING:
+
+CACHE:
+
+
 ``
