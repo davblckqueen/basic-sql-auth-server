@@ -32,9 +32,8 @@ export class AuthController {
             .catch((error) => error);
     }
 
-    @Post('login')
-    @HttpCode(400)
     @UseGuards(LocalAuthGuard)
+    @Post('login')
     async login(@Request() req): Promise<{access_token: string}> {
         return await this.authService.login(req.user)
             .catch((error) => error);

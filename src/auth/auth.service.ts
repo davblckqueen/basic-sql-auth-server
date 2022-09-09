@@ -51,9 +51,10 @@ export class AuthService {
             try {
                 const payload = { username: user.email, sub: user.id };
                 resolve({
-                    access_token: this.jwtService.sign( payload ),
+                    access_token: this.jwtService.sign(payload),
                 });
             } catch(error) {
+                console.error(error);
                 reject(new InternalServerErrorException(error));
             }
 

@@ -74,9 +74,9 @@ export class UsersService {
     private async selectProfile(id: number, userId: boolean = false): Promise<Profile> {
         try {
             const profile = await this.repo.query(
-                `SELECT ${!userId?'id':''}, name, address, ${
+                `SELECT ${!userId?'id,':''} name, address${
                     !userId
-                    ? 'createdAt, updatedAt'
+                    ? ', createdAt, updatedAt'
                     : ''
                 } FROM profile WHERE ${ 
                     userId

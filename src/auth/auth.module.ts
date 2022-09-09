@@ -17,9 +17,11 @@ import { User } from './entities/user.entity';
     TypeOrmModule.forFeature([User]),
     forwardRef(() => UsersModule),
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '3600s' },
+    JwtModule.registerAsync({
+        useFactory: () => ({
+            secret: process.env.JWT_SECRET_KEY,
+            signOptions: { expiresIn: 3600 },
+        }),
     }),
   ],
   controllers: [AuthController],
