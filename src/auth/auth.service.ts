@@ -51,20 +51,16 @@ export class AuthService {
             try {
                 const payload = { username: user.email, sub: user.id };
                 resolve({
-                    access_token: this.jwtService.sign(
-                        payload,
-                        process.env.JWT_SECRET_KEY ?? '',
-                        {expiresIn: 3600},
-                    ),
+                    access_token: this.jwtService.sign( payload ),
                 });
-            } catch {
+            } catch(error) {
                 reject(new InternalServerErrorException(error));
             }
 
         });
     }
 
-    async validateUser(email: string, password: string): Promise<any> {
+    async validateUser(email: string, passwordEntered: string): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
                 // Check user existence
@@ -72,15 +68,16 @@ export class AuthService {
                 if (isNil(user)) 
                     return reject(new NotFoundException(email));
                 // Check the password
-                if (!(await checkPassword(
-                    password,
+                const passMatched = await this.checkPassword(
+                    passwordEntered,
                     user.password,
-                ))) resolve(null);
+                );
+                if (!passMatched) resolve(null);
                 // Omit hashed password on the resolve
                 const { password, ...result } = user;
                 // END
                 resolve(result);
-            } catch {
+            } catch(error) {
                 reject(new InternalServerErrorException(error));
             }
         });

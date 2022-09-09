@@ -1,5 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { JwtStrategy } from '../shared/strategies/jwt.strategy';
 
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
@@ -18,6 +19,7 @@ import { Profile } from './entities/profile.entity';
   providers: [
       UsersService,
       AuthService,
+      JwtStrategy
   ],
   exports: [
       UsersService,

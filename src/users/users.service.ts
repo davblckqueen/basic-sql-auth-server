@@ -44,6 +44,19 @@ export class UsersService {
             }
         });
     }
+    
+    async getProfile(user: any): Promise<Profile> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const profile = await this.selectProfile(user.userId, true);
+                if(isNil(profile)) 
+                    return reject(new NotFoundException(user.userId));
+                resolve(profile);
+            } catch (error) {
+                reject(new InternalServerErrorException(error));
+            }
+        });
+    }
 
     private async createEntity(data: CreateProfileDTO): Promise<Profile> {
         try {
@@ -58,9 +71,19 @@ export class UsersService {
         }
     }
     
-    private async selectProfile(id: number): Promise<Profile> {
+    private async selectProfile(id: number, userId: boolean = false): Promise<Profile> {
         try {
-            const profile = await this.repo.query(`SELECT id, name, address, createdAt, updatedAt FROM profile WHERE id='${id}'`);
+            const profile = await this.repo.query(
+                `SELECT ${!userId?'id':''}, name, address, ${
+                    !userId
+                    ? 'createdAt, updatedAt'
+                    : ''
+                } FROM profile WHERE ${ 
+                    userId
+                        ?'userId'
+                        :'id' 
+                }='${id}'`
+            );
             return profile[0] as Profile ?? null;
         } catch(err) {
             console.log('ERROR: ', err);

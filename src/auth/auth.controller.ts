@@ -1,9 +1,16 @@
-import { Controller, Post, Body, HttpCode, Request } from '@nestjs/common';
+import { 
+    Controller, 
+    Post,
+    Body, 
+    HttpCode,
+    Request,
+    UseGuards
+} from '@nestjs/common';
 import {
-  ApiExtraModels,
-  ApiOkResponse,
-  ApiTags,
-  getSchemaPath,
+    ApiExtraModels,
+    ApiOkResponse,
+    ApiTags,
+    getSchemaPath,
 } from '@nestjs/swagger';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 

@@ -1,7 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
+import { JwtModule } from '@nestjs/jwt';
+import { LocalStrategy } from './strategies/local.strategy';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -16,6 +17,10 @@ import { User } from './entities/user.entity';
     TypeOrmModule.forFeature([User]),
     forwardRef(() => UsersModule),
     PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '3600s' },
+    }),
   ],
   controllers: [AuthController],
   providers: [
@@ -26,6 +31,7 @@ import { User } from './entities/user.entity';
   exports: [
       AuthService,
       TypeOrmModule,
+      JwtModule,
   ]
 })
 export class AuthModule {}
