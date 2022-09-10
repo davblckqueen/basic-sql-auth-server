@@ -3,7 +3,6 @@ import {
     ApiBearerAuth,
     ApiOkResponse,
     ApiTags,
-    ApiBody,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
 import { UsersService } from './users.service'
@@ -17,7 +16,7 @@ export class UsersController {
 
     @UseGuards(JwtAuthGuard)
     @Get('profile')
-    @ApiBody({ type: UserInfoDTO})
+    @ApiOkResponse({ type: UserInfoDTO})
     async getProfile(@Request() req) {
         const profile = await this.usersService.getProfile(req.user)
             .catch((err) => err);

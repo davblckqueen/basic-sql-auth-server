@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  api:
+    container_name: auth_api
+    restart: always
+    build: .
+    volumes:
+      - ./src:/app/auth_api/src
+      - ./test:/app/auth_api/test
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    links:
+      - mysql
+        #- redis
+    depends_on:
+      - mysql
+        #- redis
+  mysql:
+    container_name: mysql1
+    restart: always
+    image: mysql/mysql-server:latest
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=Qwer123*
+      - MYSQL_DATABASE=authdemo
+    ports:
+    - "3306:3306"
+    volumes:
+    - myapp_mysql_data:/var/lib/mysql
+      #redis: # Example Service
+      #container_name: myapp_redis
+      #restart: always
+      #image: redis:6.0-alpine
+      #expose:
+      #- "6379"
+      #volumes:
+      #- myapp_redis_data:/data
+
+volumes:
+  myapp_mysql_data:
+    #myapp_redis_data:
+
+networks:
+  default:
+    external:
+      name: basic-sql-auth-server 
